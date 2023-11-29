@@ -16,7 +16,7 @@ const Home = () => {
         tabBarIcon: ({focused, color, size}) => {
           let iconSource;
 
-          if (route.name === 'Home') {
+          if (route.name === 'HomeScreen') {
             iconSource = !focused
               ? require('../assets/images/home.png')
               : require('../assets/images/home_filled.png');
@@ -55,7 +55,7 @@ const Home = () => {
         },
       })}>
       <Tab.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           headerShown: false,
