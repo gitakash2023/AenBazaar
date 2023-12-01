@@ -23,12 +23,14 @@ const Search = ({onSearch}) => {
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <TouchableOpacity onPress={handleSearch}>
-        <Image
-          source={require('../assets/images/search.png')}
-          style={styles.searchIcon}
-        />
-      </TouchableOpacity>
+      {searchQuery.length > 0 && (
+        <TouchableOpacity onPress={handleSearch}>
+          <Image
+            source={require('../assets/images/search.png')}
+            style={styles.searchIcon}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginVertical: 10,
     borderRadius: 6,
-    backgroundColor: 'gray',
+    backgroundColor: '#D3D3D3',
     opacity: 0.6,
   },
   input: {

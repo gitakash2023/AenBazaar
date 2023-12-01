@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProducts} from '../api/api';
 import {setProducts} from '../reducers/productSlice';
 import Search from './Search';
+import ProductCard from './ProductCard';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ProductList = () => {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   const handleSearch = query => {
     setSearchQuery(query);
@@ -45,16 +46,7 @@ const ProductList = () => {
         <FlatList
           data={filteredProducts}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
-            <View style={{marginVertical: 10}}>
-              <Image
-                source={{uri: item.image}}
-                style={{width: '100%', height: 200}}
-              />
-              <Text>{item.title}</Text>
-              <Text>${item.price}</Text>
-            </View>
-          )}
+          renderItem={({item}) => <ProductCard item={item} />}
         />
       )}
     </View>
