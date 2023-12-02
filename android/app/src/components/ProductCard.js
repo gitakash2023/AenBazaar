@@ -1,9 +1,17 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
-import Button from './Button';
+
 import {RazorpayCheckout} from 'react-native-razorpay';
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../reducers/cartSlice';
+import CustomButton from './CustomButtom';
 
 const ProductCard = ({item}) => {
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addToCart(item)); // Dispatch the addToCart action with the item as payload
+    Alert.alert('Success', 'Item added to the cart');
+  };
   const handleBuyNow = async () => {
     try {
       const options = {
@@ -52,7 +60,7 @@ const ProductCard = ({item}) => {
           marginVertical: 15,
         }}>
         <TouchableOpacity>
-          <Button
+          <CustomButton
             title={'Buy now'}
             textColor={'white'}
             bgColor={'black'}
@@ -60,7 +68,12 @@ const ProductCard = ({item}) => {
           />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Button title={'Add to cart'} textColor={'white'} bgColor={'green'} />
+          <CustomButton
+            title={'Add to cart'}
+            textColor={'white'}
+            bgColor={'green'}
+            onPress={handleAddToCart}
+          />
         </TouchableOpacity>
       </View>
     </View>

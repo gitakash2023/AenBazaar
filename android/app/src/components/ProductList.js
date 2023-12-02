@@ -40,7 +40,7 @@ const ProductList = () => {
     <View>
       <Search products={allProducts} onSearch={handleSearch} />
 
-      {filteredProducts.length === 0 ? (
+      {!filteredProducts.length === 0 ? (
         <Text>No results found for "{searchQuery}"</Text>
       ) : (
         <FlatList
