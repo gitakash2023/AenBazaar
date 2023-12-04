@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 
-import {RazorpayCheckout} from 'react-native-razorpay';
+import RazorpayCheckout from 'react-native-razorpay';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../reducers/cartSlice';
 import CustomButton from './CustomButtom';
@@ -18,7 +18,7 @@ const ProductCard = ({item}) => {
         description: 'Payment for ' + item.title,
         image: item.image,
         currency: 'INR', // currency code
-        key: 'rzp_test_TtfTa66iDw1XGY', //  Razorpay API key
+        key: 'rzp_test_PMAXD9CgDWklyL', //  Razorpay API key
         amount: item.price * 100, // Convert to the smallest currency unit (e.g., paisa for INR)
         name: 'AENBAZAR',
         prefill: {
@@ -30,10 +30,10 @@ const ProductCard = ({item}) => {
       };
 
       const data = await RazorpayCheckout.open(options);
-      Alert.alert('Payment Success:', data.razorpay_payment_id);
+      Alert.alert('Payment Success:');
       // Handle the success response, update your state or trigger further actions
     } catch (error) {
-      console.error('Payment Error:', error); // Handle payment errors
+      Alert.alert('Payment Error:', error); // Handle payment errors
     }
   };
   return (
@@ -67,6 +67,7 @@ const ProductCard = ({item}) => {
             onPress={handleBuyNow}
           />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <CustomButton
             title={'Add to cart'}
