@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "146660709496",
+    "project_id": "aenbazar-11501",
+    "storage_bucket": "aenbazar-11501.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146660709496:android:a75330a8377c496bac098d",
+        "android_client_info": {
+          "package_name": "com.aenbazaar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAidjAHVpANJD4vzhddHZ_lVeF0UJUvlmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
