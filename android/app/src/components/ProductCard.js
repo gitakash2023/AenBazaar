@@ -5,12 +5,14 @@ import RazorpayCheckout from 'react-native-razorpay';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../reducers/cartSlice';
 import CustomButton from './CustomButtom';
+import {itemDataPost, paymentDataPost} from '../api/paymentDataPost';
 
 const ProductCard = ({item}) => {
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addToCart(item)); // Dispatch the addToCart action with the item as payload
     Alert.alert('Success', 'Item added to the cart');
+    itemDataPost(item);
   };
   const handleBuyNow = async () => {
     try {
@@ -31,9 +33,12 @@ const ProductCard = ({item}) => {
 
       const data = await RazorpayCheckout.open(options);
       Alert.alert('Payment Success:');
+
       // Handle the success response, update your state or trigger further actions
+      await paymentDataPost(options);
+      Alert.alert('Payment Success:', 'Payment data added to Firestore');
     } catch (error) {
-      Alert.alert('Payment Error:', error); // Handle payment errors
+      Alert.alert('Payment Error:', error);
     }
   };
   return (
