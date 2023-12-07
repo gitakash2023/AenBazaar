@@ -6,8 +6,12 @@ import {useDispatch} from 'react-redux';
 import {addToCart} from '../reducers/cartSlice';
 import CustomButton from './CustomButtom';
 import {itemDataPost, paymentDataPost} from '../api/paymentDataPost';
+import Account from '../bottomTabScreens/Account';
+import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const ProductCard = ({item}) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addToCart(item)); // Dispatch the addToCart action with the item as payload
@@ -16,6 +20,7 @@ const ProductCard = ({item}) => {
   };
   const handleBuyNow = async () => {
     try {
+      const user = auth().currentUser;
       const options = {
         description: 'Payment for ' + item.title,
         image: item.image,
@@ -24,7 +29,7 @@ const ProductCard = ({item}) => {
         amount: item.price * 100, // Convert to the smallest currency unit (e.g., paisa for INR)
         name: 'AENBAZAR',
         prefill: {
-          email: 'customer@example.com',
+          email: user.email,
           contact: '1234567891',
           name: 'Akash',
         },
@@ -37,6 +42,7 @@ const ProductCard = ({item}) => {
       // Handle the success response, update your state or trigger further actions
       await paymentDataPost(options);
       Alert.alert('Payment Success:', 'Payment data added to Firestore');
+      navigation.navigate('Account');
     } catch (error) {
       Alert.alert('Payment Error:', error);
     }
