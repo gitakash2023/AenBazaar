@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchProducts} from '../api/api';
-import {setProducts} from '../reducers/productSlice';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../api/api';
+import { setProducts } from '../reducers/productSlice';
 import Search from './Search';
 import ProductCard from './ProductCard';
 
@@ -18,6 +18,7 @@ const ProductList = () => {
       try {
         const data = await fetchProducts();
         dispatch(setProducts(data));
+        setFilteredProducts(data); // Show all items when component mounts
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -29,11 +30,16 @@ const ProductList = () => {
   const handleSearch = query => {
     setSearchQuery(query);
 
-    // Filter products based on the search query
-    const filtered = allProducts.filter(product =>
-      product.title.toLowerCase().includes(query.toLowerCase()),
-    );
-    setFilteredProducts(filtered);
+    // If the search query is empty, show all products
+    if (query.trim() === '') {
+      setFilteredProducts(allProducts);
+    } else {
+      // Filter products based on the search query
+      const filtered = allProducts.filter(product =>
+        product.title.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredProducts(filtered);
+    }
   };
 
   return (
@@ -46,7 +52,7 @@ const ProductList = () => {
         <FlatList
           data={filteredProducts}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <ProductCard item={item} />}
+          renderItem={({ item }) => <ProductCard item={item} />}
         />
       )}
     </View>

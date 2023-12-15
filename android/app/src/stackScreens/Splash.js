@@ -19,6 +19,7 @@ const Splash = () => {
         // User is not registered, navigate to Signup screen
         navigation.navigate('Register');
       }
+     
     }, 2000);
   }, [navigation]);
 

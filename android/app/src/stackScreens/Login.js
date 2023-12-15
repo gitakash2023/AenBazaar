@@ -98,27 +98,35 @@ const Login = () => {
             />
           </View>
 
-          {password.length > 0 && (
-            <View>
-              {isLogin ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
+          {password.length > 0 && 
+           
+            (
+                <View>
                 <TouchableOpacity onPress={handleEmptyPassword}>
                   <Image
                     source={require('../assets/images/cancel.png')}
                     style={styles.cancle}
                   />
                 </TouchableOpacity>
-              )}
-            </View>
+                </View>
+
+              
+            
           )}
         </View>
       </View>
 
       {isInputValid && (
-        <TouchableOpacity style={styles.LoginButton} onPress={handleLogin}>
+        <View>
+              {isLogin ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : (
+                <TouchableOpacity style={styles.LoginButton} onPress={handleLogin}>
           <Text style={styles.LoginButtonText}>Login</Text>
         </TouchableOpacity>
+              )}
+            </View>
+       
       )}
 
       <Text style={styles.loginLink} onPress={navigateToSignup}>
@@ -153,11 +161,13 @@ const styles = StyleSheet.create({
   },
   inputFlex: {
     flexDirection: 'row',
+    
   },
   cancle: {
     width: 20,
     height: 20,
     marginTop: 10,
+    
   },
   LoginButton: {
     backgroundColor: 'blue',
@@ -167,6 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5,
     marginTop: 10,
+    padding:8
   },
   LoginButtonText: {
     color: 'white',

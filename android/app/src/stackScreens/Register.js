@@ -97,26 +97,33 @@ const Register = () => {
 
           {password.length > 0 && (
             <View>
-              {isSignup ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
+              
                 <TouchableOpacity onPress={handleEmptyPassword}>
                   <Image
                     source={require('../assets/images/cancel.png')}
                     style={styles.cancle}
                   />
                 </TouchableOpacity>
-              )}
+             
             </View>
           )}
         </View>
       </View>
 
       {isInputValid && (
+        <View>
+        {isSignup ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : (
+
         <TouchableOpacity style={styles.signupButton} onPress={handleSignUp}>
           <Text style={styles.signupButtonText}>Sign Up</Text>
         </TouchableOpacity>
+      
+        )}
+        </View>
       )}
+
 
       <Text style={styles.loginLink} onPress={navigateToLogin}>
         Already have an account? Log in
@@ -158,12 +165,13 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     backgroundColor: 'blue',
-    width: '80%',
+    width: '90%',
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
     marginTop: 10,
+    padding:8
   },
   signupButtonText: {
     color: 'white',

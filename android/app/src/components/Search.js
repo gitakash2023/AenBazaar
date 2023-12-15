@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginVertical: 10,
     borderRadius: 6,
-    backgroundColor: '#D3D3D3',
+    backgroundColor: 'white',
     opacity: 0.6,
   },
   input: {

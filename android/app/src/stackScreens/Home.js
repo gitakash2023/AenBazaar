@@ -3,7 +3,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../bottomTabScreens/HomeScreen';
 import Categories from '../bottomTabScreens/Categories';
-import Notifications from '../bottomTabScreens/Notifications';
+
 import Account from '../bottomTabScreens/Account';
 import Cart from '../bottomTabScreens/Cart';
 
@@ -24,19 +24,11 @@ const Home = () => {
             iconSource = !focused
               ? require('../assets/images/category.png')
               : require('../assets/images/categoryf.png');
-          } else if (route.name === 'Notifications') {
-            iconSource = !focused
-              ? require('../assets/images/notification.png')
-              : require('../assets/images/notification_filled.png');
-          } else if (route.name === 'Account') {
+          }  else if (route.name === 'Account') {
             iconSource = !focused
               ? require('../assets/images/account.png')
               : require('../assets/images/account_filled.png');
-          } else if (route.name === 'Cart') {
-            iconSource = !focused
-              ? require('../assets/images/cart.png')
-              : require('../assets/images/cart_filled.png');
-          }
+          } 
 
           return (
             <Image
@@ -68,13 +60,13 @@ const Home = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Notifications"
         component={Notifications}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Account"
         component={Account}
@@ -82,13 +74,13 @@ const Home = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Cart"
         component={Cart}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
