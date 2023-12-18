@@ -1,52 +1,26 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 
-import RazorpayCheckout from 'react-native-razorpay';
+
 import {useDispatch} from 'react-redux';
-import {addToCart} from '../reducers/cartSlice';
 import CustomButton from './CustomButtom';
-import {itemDataPost, paymentDataPost} from '../api/paymentDataPost';
+
 import Account from '../bottomTabScreens/Account';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import { addToCart } from '../reducers/cartSlice';
+import { handleBuyNow } from '../utils/PaymentUtil';
+
 
 const ProductCard = ({item}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const handleAddToCart = () => {
-    dispatch(addToCart(item)); // Dispatch the addToCart action with the item as payload
-    Alert.alert('Success', 'Item added to the cart');
-    itemDataPost(item);
+    dispatch(addToCart(item));
+    Alert.alert("'Successfully added into cart'")
   };
-  const handleBuyNow = async () => {
-    try {
-      const user = auth().currentUser;
-      const options = {
-        description: 'Payment for ' + item.title,
-        image: item.image,
-        currency: 'INR', // currency code
-        key: 'rzp_test_PMAXD9CgDWklyL', //  Razorpay API key
-        amount: item.price * 100, // Convert to the smallest currency unit (e.g., paisa for INR)
-        name: 'AENBAZAR',
-        prefill: {
-          email: user.email,
-          contact: '1234567891',
-          name: 'Akash',
-        },
-        theme: {color: '#F37254'},
-      };
-
-      const data = await RazorpayCheckout.open(options);
-      Alert.alert('Payment Success:');
-
-      // Handle the success response, update your state or trigger further actions
-      await paymentDataPost(options);
-      Alert.alert('Payment Success:', 'Payment data added to Firestore');
-      navigation.navigate('Account');
-    } catch (error) {
-      Alert.alert('Payment Error:', error);
-    }
-  };
+ 
   return (
     <View
       style={{
@@ -75,7 +49,7 @@ const ProductCard = ({item}) => {
             title={'Buy now'}
             textColor={'white'}
             bgColor={'black'}
-            onPress={handleBuyNow}
+            onPress={() => handleBuyNow(item)}
           />
         </TouchableOpacity>
 

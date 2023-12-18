@@ -5,20 +5,19 @@ import { fetchProducts } from '../api/api';
 import { setProducts } from '../reducers/productSlice';
 import Search from './Search';
 import ProductCard from './ProductCard';
+import Cart from '../bottomTabScreens/Cart';
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector(state => state.product.products);
-
   const [filteredProducts, setFilteredProducts] = useState(allProducts);
   const [searchQuery, setSearchQuery] = useState('');
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchProducts();
         dispatch(setProducts(data));
-        setFilteredProducts(data); // Show all items when component mounts
+        setFilteredProducts(data); 
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -41,6 +40,14 @@ const ProductList = () => {
       setFilteredProducts(filtered);
     }
   };
+  const renderItem = ({ item }) => (
+    <View>
+   
+      <ProductCard item={item} />
+
+    
+    </View>
+  );
 
   return (
     <View>
@@ -52,7 +59,9 @@ const ProductList = () => {
         <FlatList
           data={filteredProducts}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => <ProductCard item={item} />}
+          // renderItem={({ item }) => <ProductCard item={item} />}
+          renderItem={renderItem}
+
         />
       )}
     </View>

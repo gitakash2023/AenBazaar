@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, ScrollView } from 'react-native';
-import { getAuth, updateProfile } from '@react-native-firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from '@react-native-firebase/firestore';
 
 const Profile = () => {
   const [name, setName] = useState('');
@@ -13,61 +11,11 @@ const Profile = () => {
   const [landmark, setLandmark] = useState('');
   const [pinCode, setPinCode] = useState('');
 
-  const auth = getAuth();
-  const firestore = getFirestore();
-  const user = auth.currentUser;
+const handleUpdateProfile=()=>{
 
-  // const fetchData = async () => {
-  //   try {
-  //     const userDocRef = doc(firestore, 'userProfile', user.uid);
-  //     const userDocSnapshot = await get(userDocRef);
+  }
 
-  //     if (userDocSnapshot.exists()) {
-  //       const userData = userDocSnapshot.data();
-  //       setName(userData.name || '');
-  //       setMobileNumber(userData.mobileNumber || '');
-  //       setCountry(userData.country || '');
-  //       setState(userData.state || '');
-  //       setCity(userData.city || '');
-  //       setCurrentAddress(userData.currentAddress || '');
-  //       setLandmark(userData.landmark || '');
-  //       setPinCode(userData.pinCode || '');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching user profile:', error.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []); // Fetch data when the component mounts
-
-  const handleUpdateProfile = async () => {
-    try {
-      // Update profile in Firebase Authentication
-      await updateProfile(user, {
-        displayName: name,
-      });
-
-      // Update profile in Firestore
-      const userDocRef = doc(firestore, 'userProfile', user.uid);
-      await setDoc(userDocRef, {
-        name,
-        mobileNumber,
-        country,
-        state,
-        city,
-        currentAddress,
-        landmark,
-        pinCode,
-      });
-
-      alert('Profile updated successfully!');
-    } catch (error) {
-      console.error('Error updating profile:', error.message);
-    }
-  };
-
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image

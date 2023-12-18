@@ -3,6 +3,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../bottomTabScreens/HomeScreen';
 import Categories from '../bottomTabScreens/Categories';
+import { useSelector } from 'react-redux';
 
 import Account from '../bottomTabScreens/Account';
 import Cart from '../bottomTabScreens/Cart';
@@ -10,6 +11,8 @@ import Cart from '../bottomTabScreens/Cart';
 const Tab = createBottomTabNavigator();
 
 const Home = () => {
+    const cartItems = useSelector((state) => state.cart.items);
+console.log(cartItems.length)
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -28,7 +31,11 @@ const Home = () => {
             iconSource = !focused
               ? require('../assets/images/account.png')
               : require('../assets/images/account_filled.png');
-          } 
+          } else if (route.name === 'Cart') {
+            iconSource = !focused
+              ? require('../assets/images/cart.png')
+              : require('../assets/images/cart_filled.png');
+          }
 
           return (
             <Image
@@ -74,13 +81,14 @@ const Home = () => {
           headerShown: false,
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Cart"
         component={Cart}
         options={{
           headerShown: false,
+          tabBarBadge: cartItems.length > 0 ? cartItems.length : null,
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
