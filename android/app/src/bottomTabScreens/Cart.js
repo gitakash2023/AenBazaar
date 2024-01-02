@@ -1,50 +1,78 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Button,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {removeFromCart} from '../reducers/cartSlice';
+import React, { useState } from 'react';
+import { View, Text, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart } from '../reducers/cartSlice';
 import CustomButton from '../components/CustomButtom';
-import RazorpayCheckout from 'react-native-razorpay';
-import { paymentDataPost } from '../api/paymentDataPost';
-import {useNavigation} from '@react-navigation/native';
 import { handleBuyNow } from '../utils/PaymentUtil';
 
 const Cart = () => {
-  const navigation = useNavigation();
-
   const cartData = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
   const handleRemoveFromCart = item => {
     dispatch(removeFromCart(item));
-    Alert.alert('successfully removed from cart');
+    Alert.alert('Successfully removed from cart');
   };
-  const handleBuy = async () => {
-    Alert.alert("clicked")
-    // Check if the cart is not empty before proceeding with the payment
+
+  const handleBuy = async (item) => {
+    
+    await handleBuyNow(item);
+  };
+  const totalPayment = cartData.reduce((total, item) => total + item.price, 0);
+
+  const handleBuyAll = async () => {
     if (cartData.length === 0) {
       Alert.alert('Cart is empty. Add items to cart before buying.');
       return;
     }
 
-    // Call the handleBuyNow function with the first item in the cart
-    await handleBuyNow(cartData[0]);
+    Alert.alert(
+      "Confirm Purchase",
+      `Total Payment for All Items: $${totalPayment.toFixed(2)}`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Buy All",
+          // onPress: async () => {
+          //   for (const item of cartData) {
+          //     await handleBuyNow(item);
+          //   }
+          //   Alert.alert('Payment successful for all items!');
+          // },
+          onPress: async () => {
+            // Pass the entire cartData to handleBuyNow
+            await handleBuyNow(cartData);
+            Alert.alert('Payment successful for all items!');
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
+
 
   return (
     <View>
+     <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 15}}>
+     <Text style={{color:"green"}}>Total: ${totalPayment.toFixed(2)}</Text>
+          <TouchableOpacity>
+         
+            <CustomButton
+              title={'Buy All'}
+              bgColor={'blue'}
+              textColor={'white'}
+              onPress={handleBuyAll}
+            />
+          </TouchableOpacity>
+        </View>
       <View>
         <FlatList
           data={cartData}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View
               style={{
                 backgroundColor: '#D3D3D3',
@@ -53,26 +81,20 @@ const Cart = () => {
                 borderRadius: 10,
                 borderBottomColor: 'gray',
                 borderTopColor: 'gray',
-              }}>
-              <Text style={{margin: 10}}>{item.title}</Text>
-              <Image
-                source={{uri: item.image}}
-                style={{width: '100%', height: 200, padding: 20}}
-              />
-              <Text style={{margin: 10, color: 'green'}}>${item.price}</Text>
+              }}
+            >
+              
+              <Image source={{ uri: item.image }} style={{ width: '100%', height: 200, padding: 20}} />
+              <Text style={{ margin: 5 ,color:"blue"}}>{item.title}</Text>
+              <Text style={{  color: 'green' ,marginLeft:8}}>${item.price}</Text>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  margin: 10,
-                }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
                 <TouchableOpacity>
                   <CustomButton
-                    title={'Buy now'}
+                    title={'Buy Now'}
                     bgColor={'black'}
                     textColor={'white'}
-                    onPress={() => handleBuy}
+                    onPress={() => handleBuy(item)}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -87,10 +109,12 @@ const Cart = () => {
             </View>
           )}
         />
+
+       
       </View>
+      
     </View>
   );
 };
 
 export default Cart;
-

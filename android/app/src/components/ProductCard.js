@@ -35,7 +35,7 @@ const ProductCard = ({item}) => {
         source={{uri: item.image}}
         style={{width: '100%', height: 200, padding: 20}}
       />
-      <Text style={{paddingHorizontal: 10, color: 'black'}}>{item.title}</Text>
+      <Text style={{paddingHorizontal: 10, color: 'blue'}}>{item.title}</Text>
       <Text style={{paddingHorizontal: 10, color: 'green'}}>${item.price}</Text>
       <View
         style={{

@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import GoogleLogin from '../components/GoogleLogin';
+import FacebookLogin from '../components/FacebookLogin';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -62,7 +64,7 @@ const Login = () => {
       <Text style={styles.title}>Login</Text>
 
       <View style={styles.inputContainer}>
-        <View style={styles.inputFlex}>
+        <View style={styles.inputmail}>
           <View>
             <TextInput
               style={styles.input}
@@ -86,7 +88,7 @@ const Login = () => {
           )}
         </View>
 
-        <View style={styles.inputFlex}>
+        <View style={styles.inputpassword}>
           <View>
             <TextInput
               style={styles.input}
@@ -97,41 +99,38 @@ const Login = () => {
               secureTextEntry
             />
           </View>
-
-          {password.length > 0 && 
-           
-            (
-                <View>
+          <View>
+            {password.length > 0 && (
+              <View>
                 <TouchableOpacity onPress={handleEmptyPassword}>
                   <Image
                     source={require('../assets/images/cancel.png')}
                     style={styles.cancle}
                   />
                 </TouchableOpacity>
-                </View>
-
-              
-            
-          )}
+              </View>
+            )}
+          </View>
         </View>
       </View>
 
       {isInputValid && (
         <View>
-              {isLogin ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
-                <TouchableOpacity style={styles.LoginButton} onPress={handleLogin}>
-          <Text style={styles.LoginButtonText}>Login</Text>
-        </TouchableOpacity>
-              )}
-            </View>
-       
+          {isLogin ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <TouchableOpacity style={styles.LoginButton} onPress={handleLogin}>
+              <Text style={styles.LoginButtonText}>Login</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       )}
 
       <Text style={styles.loginLink} onPress={navigateToSignup}>
         Don't have an account? Signup
       </Text>
+      <GoogleLogin/>
+      <FacebookLogin/>
     </View>
   );
 };
@@ -154,20 +153,26 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 330,
+    width: "full",
     paddingHorizontal: 10,
     marginBottom: 10,
     color: 'white',
   },
-  inputFlex: {
+  inputmail: {
     flexDirection: 'row',
-    
+    // backgroundColor: 'green',
+    justifyContent: 'space-between',
+  },
+  inputpassword: {
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+    justifyContent: 'space-between',
   },
   cancle: {
     width: 20,
-    height: 20,
+    height: 15,
     marginTop: 10,
-    
+    marginRight: 20,
   },
   LoginButton: {
     backgroundColor: 'blue',
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5,
     marginTop: 10,
-    padding:8
+    padding: 8,
   },
   LoginButtonText: {
     color: 'white',

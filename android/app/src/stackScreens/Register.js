@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import GoogleLogin from '../components/GoogleLogin';
+import FacebookLogin from '../components/FacebookLogin';
 
 const Register = () => {
   const navigation = useNavigation();
@@ -59,7 +61,7 @@ const Register = () => {
       <Text style={styles.title}>Sign Up</Text>
 
       <View style={styles.inputContainer}>
-        <View style={styles.inputFlex}>
+        <View style={styles.inputmail}>
           <View>
             <TextInput
               style={styles.input}
@@ -83,7 +85,7 @@ const Register = () => {
           )}
         </View>
 
-        <View style={styles.inputFlex}>
+        <View style={styles.inputpassword}>
           <View>
             <TextInput
               style={styles.input}
@@ -97,14 +99,12 @@ const Register = () => {
 
           {password.length > 0 && (
             <View>
-              
-                <TouchableOpacity onPress={handleEmptyPassword}>
-                  <Image
-                    source={require('../assets/images/cancel.png')}
-                    style={styles.cancle}
-                  />
-                </TouchableOpacity>
-             
+              <TouchableOpacity onPress={handleEmptyPassword}>
+                <Image
+                  source={require('../assets/images/cancel.png')}
+                  style={styles.cancle}
+                />
+              </TouchableOpacity>
             </View>
           )}
         </View>
@@ -112,22 +112,28 @@ const Register = () => {
 
       {isInputValid && (
         <View>
-        {isSignup ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
-
-        <TouchableOpacity style={styles.signupButton} onPress={handleSignUp}>
-          <Text style={styles.signupButtonText}>Sign Up</Text>
-        </TouchableOpacity>
-      
-        )}
+          {isSignup ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={handleSignUp}>
+              <Text style={styles.signupButtonText}>Sign Up</Text>
+            </TouchableOpacity>
+          )}
         </View>
       )}
-
 
       <Text style={styles.loginLink} onPress={navigateToLogin}>
         Already have an account? Log in
       </Text>
+      <View>
+      
+        <GoogleLogin />
+      </View>
+      <View>
+        <FacebookLogin />
+      </View>
     </View>
   );
 };
@@ -150,17 +156,24 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 330,
+    width: 'full',
     paddingHorizontal: 10,
     marginBottom: 10,
     color: 'white',
   },
-  inputFlex: {
+  inputmail: {
     flexDirection: 'row',
+    // backgroundColor: 'green',
+    justifyContent: 'space-between',
+  },
+  inputpassword: {
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+    justifyContent: 'space-between',
   },
   cancle: {
     width: 20,
-    height: 20,
+    height: 15,
     marginTop: 10,
   },
   signupButton: {
@@ -171,7 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5,
     marginTop: 10,
-    padding:8
+    padding: 8,
   },
   signupButtonText: {
     color: 'white',
