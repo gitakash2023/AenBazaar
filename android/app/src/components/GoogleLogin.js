@@ -6,9 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 const GoogleLogin = () => {
   const navigation = useNavigation();
 
-  useEffect(() => {
-    GoogleSignin.configure({webClientId:});
-  }, []);
+  // useEffect(() => {
+  //   GoogleSignin.configure({webClientId:});
+  // }, []);
 
   const signinWithGoogle = async () => {
     try {

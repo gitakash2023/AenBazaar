@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Text
 } from 'react-native';
 
 const Search = ({onSearch}) => {
@@ -16,47 +17,92 @@ const Search = ({onSearch}) => {
   };
 
   return (
+    <>
+   <View style={styles.headerTop}>
+   <View  style={styles.flipcartImg} >
+    <Image
+            source={require('../assets/images/flipcartLogo.png')}
+            style={styles.flipcart}
+          />
+    </View>
+    <View>
+      <Text style={styles.flipcartText} >
+        Flipcart
+      </Text>
+    </View>
+   </View>
     <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search Products..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      {searchQuery.length > 0 && (
-        <TouchableOpacity onPress={handleSearch}>
+    <TouchableOpacity onPress={handleSearch}>
           <Image
             source={require('../assets/images/search.png')}
             style={styles.searchIcon}
           />
         </TouchableOpacity>
-      )}
+      <TextInput
+        style={styles.input}
+        placeholder="Search Products..."
+        placeholderTextColor="black"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+     
+        
+      
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  headerTop:{
+    flexDirection: 'row',
+    alignItems: 'center',
+
+  },
+  flipcartText:{
+    fontSize:24,
+    marginHorizontal:10,
+    fontStyle: 'italic',
+    color:"black",
+    fontWeight: 'bold',
+    
+
+  },
+  flipcartImg:{
+    marginVertical:10,
+    backgroundColor:"gray"
+  
+  },
+
+  flipcart:{
+    width: 100,
+    height: 70,
+  },
+
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 5,
-    marginVertical: 10,
-    borderRadius: 6,
-    backgroundColor: 'white',
+
+    
+    backgroundColor: 'gray',
     opacity: 0.6,
+    borderRadius:10,
+   
   },
   input: {
     flex: 1,
     paddingHorizontal: 10,
   },
   searchIcon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     marginLeft: 5,
   },
+ 
 });
 
 export default Search;

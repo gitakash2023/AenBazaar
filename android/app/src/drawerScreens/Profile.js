@@ -11,9 +11,36 @@ const Profile = () => {
   const [landmark, setLandmark] = useState('');
   const [pinCode, setPinCode] = useState('');
 
-const handleUpdateProfile=()=>{
+  const createUser = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/users/create-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          mobileNumber,
+          country,
+          state,
+          city,
+          currentAddress,
+          landmark,
+          pinCode,
+        }),
+      });
 
-  }
+      if (response.ok) {
+        const result = await response.json();
+        console.log('User created successfully:', result);
+        // Do something with the result if needed
+      } else {
+        console.error('Failed to create user:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  };
 
   
   return (
@@ -32,7 +59,7 @@ const handleUpdateProfile=()=>{
       {inputFieldWithIcon(require('../assets/images/landmark.png'), 'Landmark', landmark, setLandmark)}
       {inputFieldWithIcon(require('../assets/images/pincode.png'), 'Pin Code', pinCode, setPinCode)}
 
-      <Button title="Update Profile" onPress={handleUpdateProfile} />
+      <Button title="Update Profile" onPress={createUser} />
     </ScrollView>
   );
 };
